@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 export default class TodoItem extends Component {
   render() {
-    const {title, done, id} = this.props.item
+    const {title, done} = this.props.item
     return (
       <li>
         <input type="checkbox" checked={done}/>
