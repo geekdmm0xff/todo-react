@@ -1,17 +1,22 @@
 const initialState = {
   todos: [
-    {name: 'jack1', done: false},
-    {name: 'jack2', done: false},
-    {name: 'jack3', done: true},
-  ]
+  ],
+  id: -1,
 }
 
-export default (state = initialState, { type, todos }) => {
-  switch (type) {
+export default (state = initialState, action) => {
+  switch (action.type) {
   case "INIT":
+    const r = {
+      ...state,
+      todos: action.todos,
+    }
+    return r
+  case 'DELETE':
+    let todos = state.todos.filter(todo => todo.id != action.id)
     return {
       ...state,
-      todos: todos,
+      todos,
     }
   default:
     return state
