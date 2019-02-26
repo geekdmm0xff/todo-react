@@ -1,6 +1,7 @@
 const initialState = {
   todos: [
   ],
+  showType: 'show-all' // show-all | only-done | only-undone
 }
 
 export default (state = initialState, action) => {
@@ -35,6 +36,13 @@ export default (state = initialState, action) => {
     return {
       ...state,
       todos,
+    }
+  }
+
+  case 'SHOW': {
+    return {
+      ...state,
+      showType: action.showType,
     }
   }
     

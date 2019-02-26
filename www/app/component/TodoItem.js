@@ -13,6 +13,7 @@ export default class TodoItem extends Component {
 
   render() {
     const {title, done, id} = this.props.item
+    console.log(done)
     return (
       <li>
         <input type="checkbox" checked={done} onChange={ ()=>{this.handleChecked(this.props.item)} }/>
@@ -27,7 +28,7 @@ export default class TodoItem extends Component {
           :
           <span onClick={ ()=>{this.handleDouleClick()} }>{title}</span>
         }
-        
+
         <button onClick={ ()=>(this.handleDelete(id)) }>删除</button>
       </li>
     )
@@ -68,4 +69,5 @@ TodoItem.propTypes = {
     item: PropTypes.object.isRequired,
     deleteFunc: PropTypes.func.isRequired,
     checkedFunc: PropTypes.func.isRequired,
+    updatedFunc: PropTypes.func.isRequired,
 }

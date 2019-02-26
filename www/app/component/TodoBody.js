@@ -42,7 +42,16 @@ export class TodoBody extends Component {
 
 const mapStateToProps = (state) => {
   return ({
-    todos: state.todoReducer.todos,
+    todos: (function() {
+      let todos = state.todoReducer.todos
+      if (state.todoReducer.showType === 'only-done') {
+        return todos.filter(todo => todo.done)
+      } else if (state.todoReducer.showType === 'only-undone') {
+        return todos.filter(todo => !todo.done)
+      } else {
+        return todos
+      }
+    }()),
   })
 }
 

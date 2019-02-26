@@ -48,3 +48,8 @@ export const postUpdateTodo = ({id, title}) => async (dispatch) => {
         dispatch({ type: 'UPDATE', todo: r })
     }
 }
+
+export const updateShowType = (showType) => ({
+    type: 'SHOW',
+    showType,
+})
