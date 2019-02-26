@@ -13,7 +13,12 @@ export class TodoBody extends Component {
         <ul>
           {
             todos.map((item, index) => {
-              return <TodoItem key={index} item={item} deleteFunc={this.deleteTodo.bind(this)}/>
+              return <TodoItem 
+              key={index} 
+              item={item} 
+              deleteFunc={this.deleteTodo.bind(this)}
+              checkedFunc={this.checkedTodo.bind(this)} 
+              />
             })
           }
         </ul>
@@ -22,8 +27,12 @@ export class TodoBody extends Component {
   }
 
   deleteTodo(id) {
-    console.log('body delete:', this, id)
     this.props.actions.postDeleteTodo(id)
+  }
+
+  checkedTodo(item) {
+    console.log("p:", item)
+    this.props.actions.postCheckedTodo(item)
   }
 }
 

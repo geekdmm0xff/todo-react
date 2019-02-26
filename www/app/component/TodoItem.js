@@ -3,18 +3,22 @@ import PropTypes from 'prop-types'
 
 export default class TodoItem extends Component {
   render() {
-    const {title, done} = this.props.item
+    const {title, done, id} = this.props.item
     return (
       <li>
-        <input type="checkbox"/>
+        <input type="checkbox" checked={done} onChange={ ()=>{this.handChecked(this.props.item)} }/>
         <span>{title}</span>
-        <button onClick={() => (this.handDelete())}>删除</button>
+        <button onClick={()=>(this.handDelete(id))}>删除</button>
       </li>
     )
   }
 
-  handDelete() {
-    this.props.deleteFunc(this.props.item.id)
+  handDelete(id) {
+    this.props.deleteFunc(id)
+  }
+
+  handChecked(item) {
+    this.props.checkedFunc(item)
   }
 }
 
