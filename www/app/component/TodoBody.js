@@ -18,6 +18,7 @@ export class TodoBody extends Component {
               item={item} 
               deleteFunc={this.deleteTodo.bind(this)}
               checkedFunc={this.checkedTodo.bind(this)} 
+              updatedFunc={this.updateTodo.bind(this)}
               />
             })
           }
@@ -31,8 +32,11 @@ export class TodoBody extends Component {
   }
 
   checkedTodo(item) {
-    console.log("p:", item)
     this.props.actions.postCheckedTodo(item)
+  }
+
+  updateTodo(item) {
+    this.props.actions.postUpdateTodo(item)
   }
 }
 

@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
     }
   }
     
-  case 'CHECKED': {
+  case 'UPDATE': {
     let todos = state.todos.map(todo => {
       return todo.id == action.todo.id ? action.todo : todo
     })

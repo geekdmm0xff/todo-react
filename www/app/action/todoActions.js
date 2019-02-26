@@ -32,6 +32,19 @@ export const postCheckedTodo = ({id, done}) => async (dispatch) => {
         method: 'PATCH',
     }).then(data => data.json())
     if (r) {
-        dispatch({ type: 'CHECKED', todo: r })
+        dispatch({ type: 'UPDATE', todo: r })
+    }
+}
+
+export const postUpdateTodo = ({id, title}) => async (dispatch) => {
+    const r = await fetch(`/todos/${id}`, {
+        body: JSON.stringify({ title }),
+        headers: {
+            'content-type': 'application/json'
+        },
+        method: 'PATCH',
+    }).then(data => data.json())
+    if (r) {
+        dispatch({ type: 'UPDATE', todo: r })
     }
 }
