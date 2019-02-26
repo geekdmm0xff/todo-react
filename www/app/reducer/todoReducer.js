@@ -1,7 +1,6 @@
 const initialState = {
   todos: [
   ],
-  id: -1,
 }
 
 export default (state = initialState, action) => {
@@ -17,6 +16,11 @@ export default (state = initialState, action) => {
     return {
       ...state,
       todos,
+    }
+  case 'ADD':
+    return {
+      ...state,
+      todos: [...state.todos, action.todo]
     }
   default:
     return state

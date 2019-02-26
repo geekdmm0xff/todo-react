@@ -9,3 +9,18 @@ export const postDeleteTodo = (id) => async (dispatch) => {
         dispatch({ type: 'DELETE', id })
     }
 }
+
+export const postAddTodo = (title) => async (dispatch) => {
+    const r = await fetch('/todos', {
+        body: JSON.stringify({ title, done: false }),
+        headers: {
+            'content-type': 'application/json'
+        },
+        method: 'POST',
+    }).then(data => data.json())
+
+    if (r) {
+        dispatch({ type: 'ADD', todo: r })
+    }
+
+}

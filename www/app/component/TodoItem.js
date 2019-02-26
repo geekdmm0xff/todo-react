@@ -6,7 +6,7 @@ export default class TodoItem extends Component {
     const {title, done} = this.props.item
     return (
       <li>
-        <input type="checkbox" checked={done}/>
+        <input type="checkbox"/>
         <span>{title}</span>
         <button onClick={() => (this.handDelete())}>删除</button>
       </li>
