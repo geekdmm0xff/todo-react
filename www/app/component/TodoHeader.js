@@ -13,7 +13,7 @@ export class TodoHeader extends Component {
 
   render() {
     return (
-      <div>
+      <div onKeyDown={(e) => {this.handleKeyDown(e)}}>
         <input type="text" value={this.state.title} onChange={this.handleInput.bind(this)}/>
         <button onClick={this.handleAdd.bind(this)}>增加</button>
       </div>
@@ -31,6 +31,12 @@ export class TodoHeader extends Component {
     this.setState({
       title: ''
     })
+  }
+
+  handleKeyDown(e) {
+    if (e.keyCode === 13) {
+      this.handleAdd()
+    }
   }
 }
 
