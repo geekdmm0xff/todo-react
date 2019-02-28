@@ -17,7 +17,14 @@ export class TodoBody extends Component {
         <ul>
             {
               todos.map((todo, index) => {
-                return <TodoItem key={index} todo={todo} deleteFunc={this.deleteHandler.bind(this)}/>
+                return (
+                  <TodoItem 
+                    key={index} 
+                    todo={todo} 
+                    deleteFunc={this.deleteHandler.bind(this)}
+                    updateFunc={this.updateHandler.bind(this)}
+                  />
+                )
               })
             }
         </ul>
@@ -32,12 +39,30 @@ export class TodoBody extends Component {
       }
     })
   }
+
+  updateHandler(todo) {
+    this.props.dispatch({
+      type: 'todo/updateTodo',
+      payload: {
+        todo,
+      }
+    })
+  }
 }
 
 const mapStateToProps = (state) => {
-  const { todos } = state.todo
+  const { todos, show } = state.todo
   return {
-    todos,
+    show,
+    todos: (function() {
+      if (show === 'only-done') {
+        return todos.filter(todo => todo.done)
+      } else if (show === 'onlu-undone') {
+        return todos.filter(todo => !todo.done)
+      } else {
+        return todos
+      }
+    })()
   }
 }
 export default connect(mapStateToProps)(TodoBody)

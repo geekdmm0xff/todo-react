@@ -3,6 +3,7 @@ export default {
 
     state: {
         todos: [],
+        show: 'show-all' // show-all | only-undone | only-done
     },
 
     reducers: {
@@ -28,6 +29,22 @@ export default {
             return {
                 ...state,
                 todos: state.todos.filter(todo => todo.id != id)
+            }
+        },
+
+        update(state, { payload: { todo } }) {
+            return {
+                ...state,
+                todos: state.todos.map(item => {
+                    return item.id === todo.id ? todo : item
+                })
+            }
+        },
+
+        show(state, { payload: { show } }) {
+            return {
+                ...state,
+                show,
             }
         }
     },
@@ -78,6 +95,22 @@ export default {
             }
         },
 
-
+        *updateTodo({ payload: { todo } }, { call, put }) {
+            const r = yield fetch(`/todos/${todo.id}`, {
+                headers: {
+                    'content-type': 'application/json'
+                },
+                method: 'PATCH',
+                body: JSON.stringify(todo),
+            }).then(data => data.json())
+            if (r) {
+                yield put({
+                    type: 'update',
+                    payload: {
+                        todo: r,
+                    }
+                })
+            }
+        }
     }
 }
