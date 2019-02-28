@@ -23,6 +23,13 @@ export default {
             }
             return state
         },
+
+        delete(state, { payload: { id } }) {
+            return {
+                ...state,
+                todos: state.todos.filter(todo => todo.id != id)
+            }
+        }
     },
 
     effects: {
@@ -52,6 +59,25 @@ export default {
                     }
                 })
             }
-        }
+        },
+
+        *deleteTodo({ payload: { todo: { id, title, done }} }, { call, put }) {
+            const r = yield fetch(`/todos/${id}`, {
+                headers: {
+                    'content-type': 'application/json'
+                },
+                method: 'DELETE',
+            }).then(data => data.json())
+            if (r) {
+                yield put({
+                    type: 'delete',
+                    payload: {
+                        id,
+                    }
+                })
+            }
+        },
+
+
     }
 }

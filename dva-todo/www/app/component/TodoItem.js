@@ -3,13 +3,29 @@ import React, { Component } from 'react'
 export default class TodoItem extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      onEdit: false,
+    }
   }
 
   render() {
-    console.log('item:', this)
-    const { id, title, done } = this.props.todo
+    const { todo: {id, title, done}, deleteFunc } = this.props
+    const { onEdit } = this.state
+    console.log('item:', this.props)
     return (
-        <li>{title}</li>
+        <li>
+          {
+            !onEdit ?
+            (<span>
+              <label>{title}</label> 
+              <button onClick={() => { deleteFunc(this.props.todo) }}>删除</button>
+            </span>)
+            :
+            <input type="text" value={title}/>
+          }
+          
+        </li>
     )
   }
+
 }
