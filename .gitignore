@@ -3,7 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=node,VisualStudioCode,macOS
 
 ## Project
-/www/dist/*
+dist/
 
 ### macOS ###
 # General
