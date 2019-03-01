@@ -18,7 +18,7 @@ export default class TodoItem extends Component {
             !onEdit ?
             (
             <span onDoubleClick={() => { this.doubleClickedHandler() }}>
-              <input type="checkbox"/>
+              <input type="checkbox" checked={done} onChange={ () => { this.checkedHandler(done) } }/>
               <label>{title}</label> 
               <button onClick={() => { deleteFunc(this.props.todo) }}>删除</button>
             </span>
@@ -57,6 +57,13 @@ export default class TodoItem extends Component {
     
     this.setState({
       onEdit: false,
+    })
+  }
+
+  checkedHandler(done) {
+    this.props.updateFunc({
+      ...this.props.todo,
+      done: !done,
     })
   }
 }

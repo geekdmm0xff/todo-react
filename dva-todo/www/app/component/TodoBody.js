@@ -57,7 +57,7 @@ const mapStateToProps = (state) => {
     todos: (function() {
       if (show === 'only-done') {
         return todos.filter(todo => todo.done)
-      } else if (show === 'onlu-undone') {
+      } else if (show === 'only-undone') {
         return todos.filter(todo => !todo.done)
       } else {
         return todos
