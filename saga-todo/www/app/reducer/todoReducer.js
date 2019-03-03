@@ -7,7 +7,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
   case "INIT": {
-    console.log('reducer recv')
     const r = {
       ...state,
       todos: action.todos,

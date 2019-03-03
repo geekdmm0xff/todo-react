@@ -27,7 +27,7 @@ export class TodoHeader extends Component {
   }
 
   handleAdd() {
-    this.props.actions.postAddTodo(this.state.title)
+    this.props.add(this.state.title)
     this.setState({
       title: ''
     })
@@ -41,7 +41,9 @@ export class TodoHeader extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  // actions: bindActionCreators(todoActions, dispatch)
+  add(title) {
+    dispatch({ type: 'ADD_TODO', title })
+  }
 })
 
 export default connect(null, mapDispatchToProps)(TodoHeader)
