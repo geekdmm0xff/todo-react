@@ -1,15 +1,14 @@
 import dva from "dva";
-import {createLogger} from 'redux-logger';
+import { createLogger } from "redux-logger";
 import router from "./router";
-
-import counterModel from "./models/counterModel";
+import carModel from "./models/carModel";
 
 //创建app，并且使用logger插件
 const app = dva({
-    onAction: createLogger()  
+  onAction: createLogger()
 });
 
-app.model(counterModel);
+app.model(carModel);
 
 app.router(router);
 
