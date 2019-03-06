@@ -8,6 +8,12 @@ export class Picker extends Component {
   }
 
   render() {
+    if (!this.props.images) {
+      return <div />;
+    }
+    if (!this.props.position) {
+      return <div />;
+    }
     let colors = Object.keys(this.props.images);
     let curColor = this.props.position.color;
 

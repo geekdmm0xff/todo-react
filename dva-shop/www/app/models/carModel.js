@@ -1,24 +1,25 @@
 export default {
   namespace: "car",
   state: {
-    images: {},
+    images: null,
     position: {
-      color: "",
+      color: null,
       album: null,
-      index: 0
+      index: 6
     }
   },
   //同步
   reducers: {
     init(state, action) {
       const { result } = action.payload;
+      const color = Object.keys(result)[0];
       return {
         ...state,
         images: result,
         position: {
-          color: Object.keys(result)[0],
-          album: "",
-          index: 0
+          ...state.position,
+          color,
+          album: Object.keys(result[color])[0]
         }
       };
     },
@@ -44,7 +45,8 @@ export default {
         ...state,
         position: {
           ...state.position,
-          color
+          color,
+          album: Object.keys(state.images[color])[0]
         }
       };
     }

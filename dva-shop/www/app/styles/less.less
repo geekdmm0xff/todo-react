@@ -27,7 +27,7 @@ ol {
         top: 0;
         right: 0;
         height: 100%;
-        width: 300px;
+        width: 280px;
         background: @theme;
     }
 
@@ -83,39 +83,47 @@ ol {
     }
 
     .picNav {
-        margin-top: 20px;
-        // background: white;
+        margin-top: 30px;
         overflow: hidden;
-        clear: both;
-        padding: 4px;
+        padding: 10px 4px;
 
-        ul {
-            li {
-                width: 49%;
+        .unit {
+            width: 8000px;
+            position: relative;
+            left: 0;
+
+            ul {
                 float: left;
-                margin-right: 2%;
-                position: relative;
+                width: 280px;
+                margin-right: 10px;
 
-                &:nth-child(2n) {
-                    margin-right: 0;
-                }
+                li {
+                    width: 49%;
+                    float: left;
+                    margin-right: 2%;
+                    position: relative;
 
-                &::before {
-                    content: "";
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background-color: rgba(0, 0, 0, 0.6);
-                }
+                    &:nth-child(2n) {
+                        margin-right: 0;
+                    }
 
-                &.cur::before {
-                    opacity: 0;
-                }
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.6);
+                    }
 
-                img {
-                    width: 100%;
+                    &.cur::before {
+                        opacity: 0;
+                    }
+
+                    img {
+                        width: 100%;
+                    }
                 }
             }
         }
