@@ -5,7 +5,7 @@ export default {
     position: {
       color: null,
       album: null,
-      index: 6
+      index: 0
     }
   },
   //同步
@@ -32,7 +32,8 @@ export default {
         ...state,
         position: {
           ...state.position,
-          album
+          album,
+          index: 0,
         }
       };
     },
@@ -47,6 +48,19 @@ export default {
           ...state.position,
           color,
           album: Object.keys(state.images[color])[0]
+        }
+      };
+    },
+
+    updateIndex(state, action) {
+      const {
+        payload: { index }
+      } = action;
+      return {
+        ...state,
+        position: {
+          ...state.position,
+          index,
         }
       };
     }
