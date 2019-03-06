@@ -8,35 +8,21 @@ export class Picker extends Component {
   }
 
   render() {
-    if (!this.props.images) {
-      return <div />;
-    }
-    if (!this.props.position) {
-      return <div />;
-    }
-    let colors = Object.keys(this.props.images);
-    let curColor = this.props.position.color;
-
     return (
       <div className="picker">
         <ul className="album">{this.showAlbum()}</ul>
-        <ul className="color">
-          {colors.map((item, index) => (
-            <li
-              key={index}
-              style={{ background: item }}
-              className={classnames({ cur: item === curColor })}
-              onClick={() => {
-                this.clickColor(item);
-              }}
-            />
-          ))}
-        </ul>
+        <ul className="color">{this.showColors()}</ul>
       </div>
     );
   }
 
   showAlbum() {
+    if (!this.props.images) {
+      return;
+    }
+    if (!this.props.position) {
+      return;
+    }
     const map = {
       center: "内饰",
       detail: "细节",
@@ -62,6 +48,27 @@ export class Picker extends Component {
       nodes.push(node);
     }
     return nodes;
+  }
+
+  showColors() {
+    if (!this.props.images) {
+      return;
+    }
+    if (!this.props.position) {
+      return;
+    }
+    let colors = Object.keys(this.props.images);
+    let curColor = this.props.position.color;
+    colors.map((item, index) => (
+      <li
+        key={index}
+        style={{ background: item }}
+        className={classnames({ cur: item === curColor })}
+        onClick={() => {
+          this.clickColor(item);
+        }}
+      />
+    ));
   }
 
   // click
