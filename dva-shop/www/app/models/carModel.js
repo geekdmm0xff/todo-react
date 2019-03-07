@@ -63,6 +63,16 @@ export default {
           index,
         }
       };
+    },
+
+    goNext(state, action) {
+      return {
+        ...state,
+        position: {
+          ...state.position,
+          index: state.position.index + 1,
+        }
+      };
     }
   },
   //异步

@@ -13,9 +13,15 @@ class App extends Component {
     });
   }
 
+  handlerNext = () => {
+    const { dispatch } = this.props
+    dispatch({type: 'car/goNext'})
+  }
+
   render() {
     return (
       <div className="albumWrapper">
+        <button onClick={this.handlerNext}>下一张</button>
         <div className="rightPart">
           <div className="titleBox">
             <h1>我是名称</h1>
