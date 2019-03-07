@@ -7,45 +7,29 @@ const kMaxImages = 6;
 export class PickerNav extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      curPage: -1,
-      total: -1,
-    };
   }
 
-  shouldComponentUpdate(next) {
-    const total = next.images.length
-    const curPage = Math.floor(this.props.position.index / kMaxImages);
-    if (curPage != this.state.curPage || total != this.state.total) {
-      this.setState({
-        curPage,
-        total
-      })
-      console.log('in state:', this.state, next)
-
-      return true
-    }
-    console.log('out state:', this.state, next)
-
-    return false
-  }
-  
   render() {
-    const {
-      position: { index }
-    } = this.props;
-    const curPage = Math.floor(this.props.position.index / kMaxImages);
-    this.setState({
-      curPage
-    })
     return (
       <div className="picNav">
-        <div className="unit" style={{ left: curPage * -290 + "px" }}>
+        <div className="unit" ref="paddle">
           {this.showPaddle()}
         </div>
-        <ol>{this.showSlider()}</ol>
+        <ol ref="slider">{this.showSlider()}</ol>
       </div>
     );
+  }
+
+  componentDidMount() {
+    const paddle = $(this.refs.paddle);
+    $(this.refs.slider).delegate("li", "click", function() {
+      let curPage = $(this).data("page");
+      $(this)
+        .addClass("cur")
+        .siblings()
+        .removeClass("cur");
+      paddle.animate({ left: curPage * -290 }, 400);
+    });
   }
 
   // UI
@@ -58,7 +42,6 @@ export class PickerNav extends Component {
     if (!images) {
       return;
     }
-    console.log('show:', images)
     let nodes = [];
     let key = 0;
     for (let i = 0; i < Math.ceil(images.length / kMaxImages); i++) {
@@ -69,7 +52,9 @@ export class PickerNav extends Component {
             <li
               key={idx}
               className={classnames({ cur: index === i * 6 + idx })}
-              onClick={() => { this.clickImage(idx) } }
+              onClick={() => {
+                this.clickImage(i * 6 + idx);
+              }}
             >
               <img src={`images/Corolla/${color}/${album}/${url}`} />
             </li>
@@ -89,7 +74,7 @@ export class PickerNav extends Component {
       return;
     }
     let pages = Math.ceil(images.length / kMaxImages);
-    let curPage = this.state.curPage; //Math.floor(index / kMaxImages);
+    let curPage = Math.floor(index / kMaxImages);
     return Array(pages)
       .fill()
       .map((item, index) => {
@@ -98,29 +83,22 @@ export class PickerNav extends Component {
             key={index}
             style={{ width: 100 / pages + "%" }}
             className={classnames({ cur: index === curPage })}
-            onClick={() => {
-              this.clickSlider(index);
-            }}
+            data-page={index}
           />
         );
       });
   }
 
   // actions
-  clickSlider(index) {
-    this.setState({
-      curPage: index
-    });
-  }
+  clickSlider(index) {}
 
-  clickImage(idx) {
-    let index = idx + this.state.curPage * kMaxImages
+  clickImage(index) {
     this.props.dispatch({
-      type: 'car/updateIndex',
+      type: "car/updateIndex",
       payload: {
-        index,
+        index
       }
-    })
+    });
   }
 }
 

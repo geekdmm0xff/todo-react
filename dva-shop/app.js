@@ -24,7 +24,6 @@ app.get("/cars", (req, res) => {
         response[color][album] = images;
       }
     }
-    console.log("response:", response);
     res.json({ result: response });
   };
 
