@@ -59,7 +59,7 @@ export class Picker extends Component {
     }
     let colors = Object.keys(this.props.images);
     let curColor = this.props.position.color;
-    colors.map((item, index) => (
+    return colors.map((item, index) => (
       <li
         key={index}
         style={{ background: item }}

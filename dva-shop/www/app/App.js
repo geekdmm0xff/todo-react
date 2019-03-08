@@ -14,14 +14,31 @@ class App extends Component {
   }
 
   handlerNext = () => {
-    const { dispatch } = this.props
-    dispatch({type: 'car/goNext'})
-  }
+    const { dispatch } = this.props;
+    dispatch({ type: "car/goNext" });
+  };
 
   render() {
+    const { color, album, index } = this.props.position;
+    let path = "";
+    if (color && album) {
+      console.log(color, album);
+      path = this.props.images[color][album][index];
+    }
+
     return (
       <div className="albumWrapper">
-        <button onClick={this.handlerNext}>下一张</button>
+        <button
+          style={{ width: "200px", height: "200px", backgroundColor: "gold" }}
+          onClick={this.handlerNext}
+        >
+          下一张
+        </button>
+        <img
+          style={{ width: "500px", height: "500px" }}
+          src={color && album ? `images/Corolla/${color}/${album}/${path}` : ""}
+          alt=""
+        />
         <div className="rightPart">
           <div className="titleBox">
             <h1>我是名称</h1>
@@ -37,4 +54,9 @@ class App extends Component {
   }
 }
 
-export default connect()(App);
+const mapStateToProps = state => ({
+  images: state.car.images,
+  position: state.car.position
+});
+
+export default connect(mapStateToProps)(App);

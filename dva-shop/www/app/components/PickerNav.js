@@ -33,9 +33,14 @@ export class PickerNav extends Component {
   }
 
   componentWillUpdate(next) {
-    let curPage = Math.floor(next.position.index / kMaxImages)
-    $(this.refs.slider).find('li').eq(curPage).addClass('cur').siblings().removeClass('cur')
-    $(this.refs.paddle).animate({ left: curPage * -290 }, 400);
+    let curPage = Math.floor(next.position.index / kMaxImages);
+    $(this.refs.slider)
+      .find("li")
+      .eq(curPage)
+      .addClass("cur")
+      .siblings()
+      .removeClass("cur");
+    $(this.refs.paddle).css({ left: curPage * -290 });
   }
 
   // UI
