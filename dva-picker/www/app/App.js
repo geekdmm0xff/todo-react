@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "dva";
 import TabCtrl from "./components/TabCtrl";
 import ListCtrl from "./components/ListCtrl";
+import './styles/less.less'
 
 const carbrand = {
   a: [
