@@ -30,7 +30,14 @@ const carbrand = {
   c: ["长安", "长城", "长安欧尚", "昌河", "长安轻型车", "成功汽车"],
   d: ["大众", "东风风行", "东南", "东风风神", "东风风光", "道奇", "东风"]
 };
-const system = ["x1", "x2", "x3", "x4", "x5"];
+const system = {
+  hot: ["大众", "奥迪", "宝马", "奔驰", "丰田"],
+  all: {
+    "两厢轿车": ["POLO", "朗逸"],
+    "三厢轿车": ["A3", 'A4'],
+    "跑车":["TT"]
+  }
+};
 class App extends Component {
   constructor() {
     super();
