@@ -15,7 +15,7 @@ module.exports = {
         exclude: [path.resolve(__dirname, "node_modules")],
         loader: "babel-loader",
         options: {
-          presets: ["env", "react", "stage-1"],
+          presets: ["env", "react"],
           plugins: ["transform-object-rest-spread", "transform-runtime"]
         }
       },
