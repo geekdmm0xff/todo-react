@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { connect } from "dva";
 import TabCtrl from "./components/TabCtrl";
 import ListCtrl from "./components/ListCtrl";
-import './styles/less.less'
+import RangeCtrl from "./components/RangeCtrl";
+import "./styles/less.less";
 
 const carbrand = {
   a: [
@@ -33,21 +34,50 @@ const carbrand = {
 const system = {
   hot: ["大众", "奥迪", "宝马", "奔驰", "丰田"],
   all: {
-    "两厢轿车": ["POLO", "朗逸"],
-    "三厢轿车": ["A3", 'A4'],
-    "跑车":["TT"]
+    两厢轿车: ["POLO", "朗逸"],
+    三厢轿车: ["A3", "A4"],
+    跑车: ["TT"]
   }
 };
+const price = {
+  defaults: [
+    {
+      min: 0,
+      max: 3,
+      desc: "3万以下"
+    },
+    {
+      min: 3,
+      max: 5,
+      desc: "3-5万"
+    },
+    {
+      min: 5,
+      max: 10,
+      desc: "5-10万"
+    },
+    {
+      min: 10,
+      max: 20,
+      desc: "10-20万"
+    }
+  ],
+  min: 0,
+  max: 100
+};
+
 class App extends Component {
   constructor() {
     super();
     this.state = {
       carbrand,
-      system
+      system,
+      price
     };
   }
 
   render() {
+    const { carbrand, system, price } = this.state;
     return (
       <div>
         <div className="ant-table">
@@ -56,14 +86,15 @@ class App extends Component {
               <tbody className="ant-table-tbody">
                 <tr className="ant-table-row">
                   <td className="td-h">品牌</td>
-                  <TabCtrl data={this.state.carbrand} />
+                  <TabCtrl data={carbrand} />
                 </tr>
                 <tr className="ant-table-row">
                   <td className="td-h">车系</td>
-                  <ListCtrl data={this.state.system} />
+                  <ListCtrl data={system} />
                 </tr>
-                <tr className="ant-table-row">
-                  <td>123</td>
+                <tr>
+                  <td className="td-h">价格</td>
+                  <RangeCtrl data={price} />
                 </tr>
               </tbody>
             </table>
