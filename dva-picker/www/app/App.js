@@ -3,6 +3,7 @@ import { connect } from "dva";
 import TabCtrl from "./components/TabCtrl";
 import ListCtrl from "./components/ListCtrl";
 import RangeCtrl from "./components/RangeCtrl";
+import SelectCtrl from "./components/SelectCtrl";
 import "./styles/less.less";
 
 const carbrand = {
@@ -65,6 +66,19 @@ const price = {
   min: 0,
   max: 100
 };
+const cartype = {
+  type: "multi",
+  options: [
+    "小型车",
+    "中型车",
+    "豪华车",
+    "小型SUV",
+    "中型SUV",
+    "大型SUV",
+    "越野",
+    "跑车"
+  ]
+};
 
 class App extends Component {
   constructor() {
@@ -72,12 +86,13 @@ class App extends Component {
     this.state = {
       carbrand,
       system,
-      price
+      price,
+      cartype
     };
   }
 
   render() {
-    const { carbrand, system, price } = this.state;
+    const { carbrand, system, price, cartype } = this.state;
     return (
       <div>
         <div className="ant-table">
@@ -95,6 +110,10 @@ class App extends Component {
                 <tr>
                   <td className="td-h">价格</td>
                   <RangeCtrl data={price} />
+                </tr>
+                <tr>
+                  <td className="td-h">其他</td>
+                  <SelectCtrl data={cartype} />
                 </tr>
               </tbody>
             </table>
