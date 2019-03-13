@@ -68,6 +68,7 @@ const price = {
 };
 const cartype = {
   type: "multi",
+  title: "车型",
   options: [
     "小型车",
     "中型车",
@@ -76,8 +77,16 @@ const cartype = {
     "中型SUV",
     "大型SUV",
     "越野",
-    "跑车"
-  ]
+    "跑车",
+    "面包车"
+  ],
+  value: ["豪华车", "大型SUV", "面包车"]
+};
+const seats = {
+  type: "single",
+  title: "座位数",
+  options: ["2座", "4座", "5座", "7座"],
+  value: "4座"
 };
 
 class App extends Component {
@@ -87,12 +96,13 @@ class App extends Component {
       carbrand,
       system,
       price,
-      cartype
+      cartype,
+      seats
     };
   }
 
   render() {
-    const { carbrand, system, price, cartype } = this.state;
+    const { carbrand, system, price, cartype, seats } = this.state;
     return (
       <div>
         <div className="ant-table">
@@ -114,6 +124,7 @@ class App extends Component {
                 <tr>
                   <td className="td-h">其他</td>
                   <SelectCtrl data={cartype} />
+                  <SelectCtrl data={seats} />
                 </tr>
               </tbody>
             </table>

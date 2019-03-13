@@ -1,88 +1,108 @@
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .td-h {
-    background: #eee !important;
-    width: 100px;
+  background: #eee !important;
+  width: 100px;
 }
 
 .tab-ctrl {
-    a {
-        margin-right: 10px;
-    }
+  a {
+    margin-right: 10px;
+  }
 }
 
 .list-ctrl {
-    a {
-        margin-right: 10px;
-    }
+  a {
+    margin-right: 10px;
+  }
 
-    .more-box {
-        margin-top: 20px;
-        border: 1px solid skyblue;
-    }
+  .more-box {
+    margin-top: 20px;
+    border: 1px solid skyblue;
+  }
 
-    dl {
-        overflow: hidden;
-    }
+  dl {
+    overflow: hidden;
+  }
 
-    dt {
-        float: left;
-        line-height: 20px;
-        padding: 10px
-    }
+  dt {
+    float: left;
+    line-height: 20px;
+    padding: 10px;
+  }
 
-    dd {
-        float: left;
-        line-height: 20px;
-        padding: 10px;
-        color: rgb(2, 15, 20);
-    }
+  dd {
+    float: left;
+    line-height: 20px;
+    padding: 10px;
+    color: rgb(2, 15, 20);
+  }
 }
 
 .range-ctrl {
-    .defaults {
-        a {
-            margin-right: 10px;
-            float: left;
-            line-height: 40px;
-        }
+  .defaults {
+    a {
+      margin-right: 10px;
+      float: left;
+      line-height: 40px;
     }
+  }
 
-    .slider {
-        float: left;
-        width: 200px;
-        line-height: 40px;
-    }
+  .slider {
+    float: left;
+    width: 200px;
+    line-height: 40px;
+  }
 
-    label {
-        line-height: 40px;
-        margin-left: 10px;
-    }
+  label {
+    line-height: 40px;
+    margin-left: 10px;
+  }
 }
 
 .select-ctrl {
+  float: left;
+  .menu-selected {
+    width: 100px;
+    height: 24px;
+    line-height: 24px;
+    border: 1px solid #e5e5e5;
+    text-indent: 5px;
+  }
 
-    .menu-selected {
-        width: 100px;
-        height: 24px;
-        line-height: 24px;
-        border: 1px solid #e5e5e5;
-        text-indent: 5px;
+  .menu {
+    width: 200px;
+    outline: 1px solid #e5e5e5;
+    background: #fff;
+    box-sizing: border-box;
+
+    dd {
+      float: left;
+      width: 100px;
+      line-height: 24px;
     }
+  }
 
-    .menu {
-        width: 200px;
-        outline: 1px solid #e5e5e5;
-        background: #fff;
-        box-sizing: border-box;
+  .menu-single {
+    width: 100px;
+    outline: 1px solid #e5e5e5;
+    background: #fff;
+    box-sizing: border-box;
 
-        dd {
-            float: left;
-            width: 100px;
-            line-height: 24px;
-        }
+    dd {
+      line-height: 24px;
+      text-align: center;
+      a {
+        width: 100%;
+        height: 100%;
+        color: rgba(0, 0, 0, 0.65);
+      }
     }
+    dd.cur {
+      background: orange;
+    }
+  }
 }
