@@ -38,7 +38,6 @@ export default class SelectCtrl extends Component {
   // UI
   renderSingleMenus = (options, value) => {
     let pos = options.indexOf(value);
-    console.log("pos", pos, options, value);
     return (
       <dl
         className="menu-single clearfix"

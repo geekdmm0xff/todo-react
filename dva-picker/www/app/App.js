@@ -4,6 +4,7 @@ import TabCtrl from "./components/TabCtrl";
 import ListCtrl from "./components/ListCtrl";
 import RangeCtrl from "./components/RangeCtrl";
 import SelectCtrl from "./components/SelectCtrl";
+import TagsCtrl from "./components/TagsCtrl";
 import "./styles/less.less";
 
 const carbrand = {
@@ -130,9 +131,12 @@ class App extends Component {
             </table>
           </div>
         </div>
+        <br />
+        <br />
+        <TagsCtrl />
       </div>
     );
   }
 }
 
-export default App;
+export default connect()(App);
