@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "dva";
+import "./styles/less.less";
+import * as templateHelper from "./models/templateHelper";
 import TabCtrl from "./components/TabCtrl";
 import ListCtrl from "./components/ListCtrl";
 import RangeCtrl from "./components/RangeCtrl";
 import SelectCtrl from "./components/SelectCtrl";
 import TagsCtrl from "./components/TagsCtrl";
-import "./styles/less.less";
 
 const carbrand = {
   a: [
@@ -104,6 +105,7 @@ class App extends Component {
 
   render() {
     const { carbrand, system, price, cartype, seats } = this.state;
+    console.log("app props:", this.props);
     return (
       <div>
         <div className="ant-table">
@@ -112,20 +114,45 @@ class App extends Component {
               <tbody className="ant-table-tbody">
                 <tr className="ant-table-row">
                   <td className="td-h">品牌</td>
-                  <TabCtrl data={carbrand} />
+                  <TabCtrl
+                    data={carbrand}
+                    k="carbrand"
+                    tag="品牌"
+                    updateFunc={this.handerUpdate.bind(this)}
+                  />
                 </tr>
                 <tr className="ant-table-row">
                   <td className="td-h">车系</td>
-                  <ListCtrl data={system} />
+                  <ListCtrl
+                    data={system}
+                    k="system"
+                    tag="车系"
+                    updateFunc={this.handerUpdate.bind(this)}
+                  />
                 </tr>
                 <tr>
                   <td className="td-h">价格</td>
-                  <RangeCtrl data={price} />
+                  <RangeCtrl
+                    data={price}
+                    k="price"
+                    tag="价格"
+                    updateFunc={this.handerUpdate.bind(this)}
+                  />
                 </tr>
                 <tr>
                   <td className="td-h">其他</td>
-                  <SelectCtrl data={cartype} />
-                  <SelectCtrl data={seats} />
+                  <SelectCtrl
+                    data={cartype}
+                    k="cartype"
+                    tag="车型"
+                    updateFunc={this.handerUpdate.bind(this)}
+                  />
+                  <SelectCtrl
+                    data={seats}
+                    k="seats"
+                    tag="座位数"
+                    updateFunc={this.handerUpdate.bind(this)}
+                  />
                 </tr>
               </tbody>
             </table>
@@ -137,6 +164,17 @@ class App extends Component {
       </div>
     );
   }
+
+  // acitons
+  handerUpdate = (key, value, tag, template) => {
+    console.log("param:", key, value, tag);
+    this.props.dispatch({
+      type: "picker/updateTag",
+      payload: { key, value, tag, template }
+    });
+  };
 }
 
-export default connect()(App);
+export default connect(({ picker: { filter } }) => ({
+  filter
+}))(App);

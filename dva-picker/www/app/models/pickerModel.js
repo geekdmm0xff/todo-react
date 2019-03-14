@@ -1,44 +1,9 @@
-const template1 = (value, tag) => `${tag}: ${value}`;
-
-const template2 = (value, tag) => `${tag}: ${value[0]}-${value[1]}万`;
-
-const template3 = (value, tag) => tag + ": " + value.join(" ");
+import * as templateHelper from "./templateHelper";
 
 export default {
   namespace: "picker",
   state: {
-    filter: [
-      {
-        key: "carbrand",
-        value: "奥迪",
-        tag: "品牌",
-        template: template1 // ${tag}:${value}
-      },
-      {
-        key: "system",
-        value: "A3",
-        tag: "车系",
-        template: template1
-      },
-      {
-        key: "price",
-        value: [10, 20],
-        tag: "价格",
-        template: template2 // ${tag}:${value[0]}-${value[1]}万
-      },
-      {
-        key: "cartype",
-        value: ["小型车", "中型车", "豪华车"],
-        tag: "车型",
-        template: template3 // ${tag}:${value[0]} ${value[1]} ...
-      },
-      {
-        key: "seats",
-        value: "座位",
-        tag: "4座",
-        template: template1
-      }
-    ]
+    filter: []
   },
   reducers: {
     deleteTag(state, action) {
@@ -49,6 +14,42 @@ export default {
         ...state,
         filter: state.filter.filter(item => item.tag != tag)
       };
+    },
+
+    updateTag(state, action) {
+      const {
+        payload: { key, value, tag, template }
+      } = action;
+      console.log("state:", state);
+      // hander add tag
+      const add = (key, value, tag, template) => {
+        console.log("add");
+        return {
+          ...state,
+          filter: [...state.filter, { key, value, tag, template }]
+        };
+      };
+
+      // hander modify tag
+      const modify = (key, value, tag, template) => {
+        console.log("modify");
+        return {
+          filter: state.filter.map(item => {
+            return item.tag === tag ? { key, value, tag, template } : item;
+          })
+        };
+      };
+
+      let isExist = false;
+
+      state.filter.forEach(item => {
+        if (item.tag === tag) {
+          isExist = true;
+        }
+      });
+      return isExist
+        ? modify(key, value, tag, template)
+        : add(key, value, tag, template);
     }
   },
   effects: {}

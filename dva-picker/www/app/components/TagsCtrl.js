@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "dva";
 import { Tag } from "antd";
+import filter from "../App";
 
 class TagsCtrl extends Component {
   render() {
     /*
     
     */
+    console.log("tags:", this);
     return (
       <div>
         <label>当前：</label>
@@ -16,6 +18,7 @@ class TagsCtrl extends Component {
   }
   // ui
   renderTags = filter => {
+    console.log("filter:", filter);
     return filter.map((item, index) => {
       const { value, tag } = item;
       return (
@@ -38,8 +41,10 @@ class TagsCtrl extends Component {
   };
 }
 
-const mapStateToProps = ({ picker }) => ({
-  ...picker
-});
+const mapStateToProps = state => {
+  return {
+    filter: state.picker.filter
+  };
+};
 
 export default connect(mapStateToProps)(TagsCtrl);
