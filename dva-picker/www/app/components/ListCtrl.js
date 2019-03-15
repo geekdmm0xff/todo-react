@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Row, Col } from "antd";
 import * as templateHelper from "../models/templateHelper";
+import classNames from "classnames";
 
 export class ListCtrl extends Component {
   state = {
-    showMore: false
+    showMore: false,
+    value: ""
   };
 
   render() {
@@ -47,8 +49,19 @@ export class ListCtrl extends Component {
       return (
         <a
           key={index}
+          className={classNames({ cur: item === this.state.value })}
           href="javascript:void(0)"
-          onClick={() => updateFunc(title, item, tag, templateHelper.template1)}
+          onClick={() => {
+            this.setState(
+              {
+                ...this.state,
+                value: item
+              },
+              () => {
+                updateFunc(title, item, tag, templateHelper.template1);
+              }
+            );
+          }}
         >
           {item}
         </a>
@@ -73,10 +86,19 @@ export class ListCtrl extends Component {
               return (
                 <a
                   key={index}
+                  className={classNames({ cur: this.state.value === elem })}
                   href="javascript:void(0);"
-                  onClick={() =>
-                    updateFunc(title, elem, tag, templateHelper.template1)
-                  }
+                  onClick={() => {
+                    this.setState(
+                      {
+                        ...this.state,
+                        value: elem
+                      },
+                      () => {
+                        updateFunc(title, elem, tag, templateHelper.template1);
+                      }
+                    );
+                  }}
                 >
                   {elem}
                 </a>

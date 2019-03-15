@@ -1,21 +1,19 @@
 import React, { Component } from "react";
 import { Slider, Row, Col } from "antd";
 import * as templateHelper from "../models/templateHelper";
+import classNames from "classnames";
 
 class RangeCtrl extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...this.props.data
+      value: [0, 100]
     };
   }
 
   render() {
     const {
-      k: title,
-      tag,
-      updateFunc,
-      data: { defaults, min, max }
+      data: { min, max }
     } = this.props;
 
     return (
@@ -29,7 +27,7 @@ class RangeCtrl extends Component {
                 range
                 min={min}
                 max={max}
-                defaultValue={[min, max]}
+                value={this.state.value}
                 onChange={this.handerSlider}
               />
             </Col>
@@ -50,16 +48,33 @@ class RangeCtrl extends Component {
       k: title,
       tag,
       updateFunc,
-      data: { defaults, min, max }
+      data: { defaults }
     } = this.props;
-
     return defaults.map((item, index) => (
       <a
         key={index}
         href="javascript:void(0);"
-        onClick={() =>
-          updateFunc(title, [item.min, item.max], tag, templateHelper.template2)
-        }
+        className={classNames({
+          cur: [item.min, item.max].every(elem =>
+            this.state.value.includes(elem)
+          )
+        })}
+        onClick={() => {
+          this.setState(
+            {
+              ...this.state,
+              value: [item.min, item.max]
+            },
+            () => {
+              updateFunc(
+                title,
+                [item.min, item.max],
+                tag,
+                templateHelper.template2
+              );
+            }
+          );
+        }}
       >
         {item.desc}
       </a>
@@ -73,8 +88,7 @@ class RangeCtrl extends Component {
     this.setState(
       {
         ...this.state,
-        min,
-        max
+        value: [min, max]
       },
       () => {
         updateFunc(title, [min, max], tag, templateHelper.template2);

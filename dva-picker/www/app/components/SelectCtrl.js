@@ -6,8 +6,8 @@ export default class SelectCtrl extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...props.data,
-      show: false
+      show: false,
+      value: props.type === "multi" ? [] : ""
     };
   }
 
@@ -25,7 +25,7 @@ export default class SelectCtrl extends Component {
 
   render() {
     const {
-      data: { type, options, value, title }
+      data: { type, title }
     } = this.props;
     return (
       <td className="select-ctrl" ref="select_ctr_box">
@@ -38,8 +38,13 @@ export default class SelectCtrl extends Component {
   }
   // UI
   renderSingleMenus = () => {
-    const { k, tag, updateFunc } = this.props;
-    const { type, options, value, title } = this.state;
+    const {
+      k,
+      tag,
+      updateFunc,
+      data: { options }
+    } = this.props;
+    const { value } = this.state;
 
     let pos = options.indexOf(value);
     return (
@@ -74,8 +79,13 @@ export default class SelectCtrl extends Component {
   };
 
   renderMultiMenus = () => {
-    const { k, tag, updateFunc } = this.props;
-    const { type, options, value, title } = this.state;
+    const {
+      k,
+      tag,
+      updateFunc,
+      data: { options }
+    } = this.props;
+    const { value } = this.state;
 
     const addTags = item => {
       this.setState(

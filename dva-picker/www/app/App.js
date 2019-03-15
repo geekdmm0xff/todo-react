@@ -81,14 +81,26 @@ const cartype = {
     "越野",
     "跑车",
     "面包车"
-  ],
-  value: ["豪华车", "大型SUV", "面包车"]
+  ]
+  // value: [] //["豪华车", "大型SUV", "面包车"]
 };
 const seats = {
   type: "single",
   title: "座位数",
-  options: ["2座", "4座", "5座", "7座"],
-  value: "4座"
+  options: ["2座", "4座", "5座", "7座"]
+  // value: "" //"4座"
+};
+
+const colors = {
+  type: "single",
+  title: "颜色",
+  options: ["红", "绿", "蓝", "黄"]
+};
+
+const engine = {
+  type: "multi",
+  title: "发动机",
+  options: ["I501", "I505", "I511", "I550", "I599", "I588"]
 };
 
 class App extends Component {
@@ -99,7 +111,8 @@ class App extends Component {
       system,
       price,
       cartype,
-      seats
+      seats,
+      colors
     };
   }
 
@@ -151,6 +164,18 @@ class App extends Component {
                     data={seats}
                     k="seats"
                     tag="座位数"
+                    updateFunc={this.handerUpdate.bind(this)}
+                  />
+                  <SelectCtrl
+                    data={colors}
+                    k="colors"
+                    tag="颜色"
+                    updateFunc={this.handerUpdate.bind(this)}
+                  />
+                  <SelectCtrl
+                    data={engine}
+                    k="engine"
+                    tag="发动机"
                     updateFunc={this.handerUpdate.bind(this)}
                   />
                 </tr>

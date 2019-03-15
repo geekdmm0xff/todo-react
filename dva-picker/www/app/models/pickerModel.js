@@ -20,10 +20,8 @@ export default {
       const {
         payload: { key, value, tag, template }
       } = action;
-      console.log("state:", state);
       // hander add tag
       const add = (key, value, tag, template) => {
-        console.log("add");
         return {
           ...state,
           filter: [...state.filter, { key, value, tag, template }]
@@ -32,7 +30,6 @@ export default {
 
       // hander modify tag
       const modify = (key, value, tag, template) => {
-        console.log("modify");
         return {
           filter: state.filter.map(item => {
             return item.tag === tag ? { key, value, tag, template } : item;
@@ -40,13 +37,7 @@ export default {
         };
       };
 
-      let isExist = false;
-
-      state.filter.forEach(item => {
-        if (item.tag === tag) {
-          isExist = true;
-        }
-      });
+      let isExist = state.filter.some(item => item.tag === tag);
       return isExist
         ? modify(key, value, tag, template)
         : add(key, value, tag, template);

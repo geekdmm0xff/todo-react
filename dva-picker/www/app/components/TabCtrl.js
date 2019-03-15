@@ -1,10 +1,18 @@
 import React, { Component } from "react";
 import { Tabs } from "antd";
+import classNames from "classnames";
 import * as templateHelper from "../models/templateHelper";
 
 const TabPane = Tabs.TabPane;
 
 class TabCtrl extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: ""
+    };
+  }
+
   render() {
     return (
       <td>
@@ -27,9 +35,14 @@ class TabCtrl extends Component {
               <a
                 href="javascript:void(0)"
                 key={index}
-                onClick={() =>
-                  updateFunc(title, item, tag, templateHelper.template1)
-                }
+                className={classNames({ cur: item === this.state.value })}
+                onClick={() => {
+                  this.setState({
+                    ...this.state,
+                    value: item
+                  });
+                  updateFunc(title, item, tag, templateHelper.template1);
+                }}
               >
                 {item}
               </a>
