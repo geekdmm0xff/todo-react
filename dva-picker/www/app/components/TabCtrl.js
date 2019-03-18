@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "dva";
 import { Tabs } from "antd";
 import classNames from "classnames";
 
@@ -7,9 +8,6 @@ const TabPane = Tabs.TabPane;
 class TabCtrl extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: ""
-    };
   }
 
   render() {
@@ -25,6 +23,16 @@ class TabCtrl extends Component {
   // UI
   renderTabs() {
     const { k: title, tag, updateFunc, data } = this.props;
+    const filter = this.props.filter
+      .filter(item => {
+        return item.tag === tag;
+      })
+      .pop();
+    let value;
+    if (filter) {
+      value = filter.value;
+    }
+
     const keys = Object.keys(data);
     return keys.map((key, index) => {
       return (
@@ -34,12 +42,8 @@ class TabCtrl extends Component {
               <a
                 href="javascript:void(0)"
                 key={index}
-                className={classNames({ cur: item === this.state.value })}
+                className={classNames({ cur: item === value })}
                 onClick={() => {
-                  this.setState({
-                    ...this.state,
-                    value: item
-                  });
                   updateFunc(title, item, tag, `${tag}:${item}`);
                 }}
               >
@@ -53,4 +57,6 @@ class TabCtrl extends Component {
   }
 }
 
-export default TabCtrl;
+export default connect(({ picker: { filter } }) => ({
+  filter
+}))(TabCtrl);
