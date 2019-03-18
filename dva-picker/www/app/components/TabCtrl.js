@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Tabs } from "antd";
 import classNames from "classnames";
-import * as templateHelper from "../models/templateHelper";
 
 const TabPane = Tabs.TabPane;
 
@@ -41,7 +40,7 @@ class TabCtrl extends Component {
                     ...this.state,
                     value: item
                   });
-                  updateFunc(title, item, tag, templateHelper.template1);
+                  updateFunc(title, item, tag, `${tag}:${item}`);
                 }}
               >
                 {item}

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Slider, Row, Col } from "antd";
-import * as templateHelper from "../models/templateHelper";
 import classNames from "classnames";
 
 class RangeCtrl extends Component {
@@ -70,7 +69,7 @@ class RangeCtrl extends Component {
                 title,
                 [item.min, item.max],
                 tag,
-                templateHelper.template2
+                `${tag}:${item.desc}`
               );
             }
           );
@@ -91,7 +90,12 @@ class RangeCtrl extends Component {
         value: [min, max]
       },
       () => {
-        updateFunc(title, [min, max], tag, templateHelper.template2);
+        updateFunc(
+          title,
+          [min, max],
+          tag,
+          `${tag}:` + [min, max].join("到") + "万"
+        );
       }
     );
   };

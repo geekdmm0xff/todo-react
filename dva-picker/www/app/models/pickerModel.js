@@ -1,5 +1,3 @@
-import * as templateHelper from "./templateHelper";
-
 export default {
   namespace: "picker",
   state: {
@@ -18,29 +16,29 @@ export default {
 
     updateTag(state, action) {
       const {
-        payload: { key, value, tag, template }
+        payload: { key, value, tag, words }
       } = action;
       // hander add tag
-      const add = (key, value, tag, template) => {
+      const add = (key, value, tag, words) => {
         return {
           ...state,
-          filter: [...state.filter, { key, value, tag, template }]
+          filter: [...state.filter, { key, value, tag, words }]
         };
       };
 
       // hander modify tag
-      const modify = (key, value, tag, template) => {
+      const modify = (key, value, tag, words) => {
         return {
           filter: state.filter.map(item => {
-            return item.tag === tag ? { key, value, tag, template } : item;
+            return item.tag === tag ? { key, value, tag, words } : item;
           })
         };
       };
 
       let isExist = state.filter.some(item => item.tag === tag);
       return isExist
-        ? modify(key, value, tag, template)
-        : add(key, value, tag, template);
+        ? modify(key, value, tag, words)
+        : add(key, value, tag, words);
     }
   },
   effects: {}

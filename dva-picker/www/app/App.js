@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "dva";
 import "./styles/less.less";
-import * as templateHelper from "./models/templateHelper";
 import TabCtrl from "./components/TabCtrl";
 import ListCtrl from "./components/ListCtrl";
 import RangeCtrl from "./components/RangeCtrl";
@@ -118,7 +117,6 @@ class App extends Component {
 
   render() {
     const { carbrand, system, price, cartype, seats } = this.state;
-    console.log("app props:", this.props);
     return (
       <div>
         <div className="ant-table">
@@ -191,11 +189,10 @@ class App extends Component {
   }
 
   // acitons
-  handerUpdate = (key, value, tag, template) => {
-    console.log("param:", key, value, tag);
+  handerUpdate = (key, value, tag, words) => {
     this.props.dispatch({
       type: "picker/updateTag",
-      payload: { key, value, tag, template }
+      payload: { key, value, tag, words }
     });
   };
 }

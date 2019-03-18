@@ -5,10 +5,6 @@ import filter from "../App";
 
 class TagsCtrl extends Component {
   render() {
-    /*
-    
-    */
-    console.log("tags:", this);
     return (
       <div>
         <label>当前：</label>
@@ -18,7 +14,6 @@ class TagsCtrl extends Component {
   }
   // ui
   renderTags = filter => {
-    console.log("filter:", filter);
     return filter.map((item, index) => {
       const { value, tag } = item;
       return (
@@ -30,7 +25,7 @@ class TagsCtrl extends Component {
             this.handerClose(tag);
           }}
         >
-          {item.template(value, tag)}
+          {item.words}
         </Tag>
       );
     });

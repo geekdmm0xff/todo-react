@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import classNames from "classnames";
-import * as templateHelper from "../models/templateHelper";
 
 export default class SelectCtrl extends Component {
   constructor(props) {
@@ -64,8 +63,7 @@ export default class SelectCtrl extends Component {
                     value: item
                   },
                   () => {
-                    console.log("over:", this.state);
-                    updateFunc(k, item, tag, templateHelper.template1);
+                    updateFunc(k, item, tag, tag + ":" + this.state.value);
                   }
                 );
               }}
@@ -94,7 +92,12 @@ export default class SelectCtrl extends Component {
           value: [...this.state.value, item]
         },
         () => {
-          updateFunc(k, this.state.value, tag, templateHelper.template3);
+          updateFunc(
+            k,
+            this.state.value,
+            tag,
+            tag + ":" + this.state.value.join("或")
+          );
         }
       );
     };
@@ -106,7 +109,7 @@ export default class SelectCtrl extends Component {
           value: this.state.value.filter(title => title != item)
         },
         () => {
-          updateFunc(k, this.state.value, tag, templateHelper.template3);
+          updateFunc(k, this.state.value, tag, tag + ":" + this.state.value);
         }
       );
     };

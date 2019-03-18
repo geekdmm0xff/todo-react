@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Row, Col } from "antd";
-import * as templateHelper from "../models/templateHelper";
 import classNames from "classnames";
 
 export class ListCtrl extends Component {
@@ -58,7 +57,7 @@ export class ListCtrl extends Component {
                 value: item
               },
               () => {
-                updateFunc(title, item, tag, templateHelper.template1);
+                updateFunc(title, item, tag, `${tag}:${item}`);
               }
             );
           }}
@@ -95,7 +94,7 @@ export class ListCtrl extends Component {
                         value: elem
                       },
                       () => {
-                        updateFunc(title, elem, tag, templateHelper.template1);
+                        updateFunc(title, elem, tag, `${tag}:${elem}`);
                       }
                     );
                   }}
