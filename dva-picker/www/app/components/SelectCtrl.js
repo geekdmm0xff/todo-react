@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "dva";
 import classNames from "classnames";
 
-export default class SelectCtrl extends Component {
+class SelectCtrl extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,46 +27,49 @@ export default class SelectCtrl extends Component {
     const {
       data: { type, title }
     } = this.props;
+
+    const filter = this.props.filter
+      .filter(item => {
+        return item.tag === this.props.tag;
+      })
+      .pop();
+    let value;
+    if (filter) {
+      value = filter.value;
+    }
+    console.log("value:", value);
+
     return (
       <td className="select-ctrl" ref="select_ctr_box">
         <div className="menu-selected" onClick={this.handlerSelectedMenu}>
           {title}
         </div>
-        {type === "multi" ? this.renderMultiMenus() : this.renderSingleMenus()}
+        {type === "multi"
+          ? this.renderMultiMenus(value)
+          : this.renderSingleMenus(value)}
       </td>
     );
   }
   // UI
-  renderSingleMenus = () => {
+  renderSingleMenus = select => {
     const {
       k,
       tag,
       updateFunc,
       data: { options }
     } = this.props;
-    const { value } = this.state;
 
-    let pos = options.indexOf(value);
     return (
       <dl
         className="menu-single clearfix"
         style={{ display: this.state.show ? "block" : "none" }}
       >
         {options.map((item, index) => (
-          <dd className={classNames({ cur: index == pos })} key={index}>
+          <dd className={classNames({ cur: item == select })} key={index}>
             <a
               href="javascript:void(0);"
               onClick={() => {
-                this.setState(
-                  {
-                    ...this.state,
-                    show: false,
-                    value: item
-                  },
-                  () => {
-                    updateFunc(k, item, tag, tag + ":" + this.state.value);
-                  }
-                );
+                updateFunc(k, item, tag, tag + ":" + item);
               }}
             >
               {item}
@@ -76,42 +80,22 @@ export default class SelectCtrl extends Component {
     );
   };
 
-  renderMultiMenus = () => {
+  renderMultiMenus = (select = []) => {
     const {
       k,
       tag,
       updateFunc,
       data: { options }
     } = this.props;
-    const { value } = this.state;
 
     const addTags = item => {
-      this.setState(
-        {
-          ...this.state,
-          value: [...this.state.value, item]
-        },
-        () => {
-          updateFunc(
-            k,
-            this.state.value,
-            tag,
-            tag + ":" + this.state.value.join("或")
-          );
-        }
-      );
+      select.push(item);
+      updateFunc(k, select, tag, tag + ":" + select.join("或"));
     };
 
     const removeTag = item => {
-      this.setState(
-        {
-          ...this.state,
-          value: this.state.value.filter(title => title != item)
-        },
-        () => {
-          updateFunc(k, this.state.value, tag, tag + ":" + this.state.value);
-        }
-      );
+      let value = select.filter(title => title != item);
+      updateFunc(k, value, tag, tag + ":" + item);
     };
 
     return (
@@ -123,9 +107,8 @@ export default class SelectCtrl extends Component {
           <dd key={index}>
             <input
               type="checkbox"
-              checked={value.includes(item)}
-              onChange={e => {
-                // () =>
+              checked={select.includes(item)}
+              onChange={event => {
                 if (event.target.checked) {
                   addTags(item);
                 } else {
@@ -148,3 +131,6 @@ export default class SelectCtrl extends Component {
     });
   };
 }
+export default connect(({ picker: { filter } }) => ({
+  filter
+}))(SelectCtrl);

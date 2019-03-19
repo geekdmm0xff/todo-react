@@ -1,23 +1,26 @@
 import React, { Component } from "react";
 import { Slider, Row, Col } from "antd";
 import classNames from "classnames";
+import { connect } from "dva";
 
 class RangeCtrl extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: [0, 100]
-    };
-  }
-
   render() {
     const {
       data: { min, max }
     } = this.props;
 
+    const filter = this.props.filter
+      .filter(item => {
+        return item.tag === this.props.tag;
+      })
+      .pop();
+    let values = [0, 100];
+    if (filter) {
+      values = filter.value;
+    }
     return (
       <td className="range-ctrl">
-        <div className="defaults">{this.renderDefault()}</div>
+        <div className="defaults">{this.renderDefault(values)}</div>
 
         <div className="slider">
           <Row>
@@ -26,8 +29,8 @@ class RangeCtrl extends Component {
                 range
                 min={min}
                 max={max}
-                value={this.state.value}
-                onChange={this.handerSlider}
+                value={values}
+                onChange={range => this.handerSlider(range, values)}
               />
             </Col>
             <Col span={10}>
@@ -42,37 +45,23 @@ class RangeCtrl extends Component {
   }
 
   // UI
-  renderDefault() {
+  renderDefault(values) {
     const {
       k: title,
       tag,
       updateFunc,
       data: { defaults }
     } = this.props;
+
     return defaults.map((item, index) => (
       <a
         key={index}
         href="javascript:void(0);"
         className={classNames({
-          cur: [item.min, item.max].every(elem =>
-            this.state.value.includes(elem)
-          )
+          cur: [item.min, item.max].every(elem => values.includes(elem))
         })}
         onClick={() => {
-          this.setState(
-            {
-              ...this.state,
-              value: [item.min, item.max]
-            },
-            () => {
-              updateFunc(
-                title,
-                [item.min, item.max],
-                tag,
-                `${tag}:${item.desc}`
-              );
-            }
-          );
+          updateFunc(title, [item.min, item.max], tag, `${tag}:${item.desc}`);
         }}
       >
         {item.desc}
@@ -81,24 +70,18 @@ class RangeCtrl extends Component {
   }
 
   // Action
-  handerSlider = ([min, max]) => {
+  handerSlider = ([min, max], values) => {
     const { k: title, tag, updateFunc } = this.props;
 
-    this.setState(
-      {
-        ...this.state,
-        value: [min, max]
-      },
-      () => {
-        updateFunc(
-          title,
-          [min, max],
-          tag,
-          `${tag}:` + [min, max].join("到") + "万"
-        );
-      }
+    updateFunc(
+      title,
+      [min, max],
+      tag,
+      `${tag}:` + [min, max].join("到") + "万"
     );
   };
 }
 
-export default RangeCtrl;
+export default connect(({ picker: { filter } }) => ({
+  filter
+}))(RangeCtrl);

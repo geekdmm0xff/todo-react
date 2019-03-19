@@ -1,19 +1,28 @@
 import React, { Component } from "react";
 import { Row, Col } from "antd";
 import classNames from "classnames";
+import { connect } from "dva";
 
-export class ListCtrl extends Component {
+class ListCtrl extends Component {
   state = {
-    showMore: false,
-    value: ""
+    showMore: false
   };
 
   render() {
+    const filter = this.props.filter
+      .filter(item => {
+        return item.tag === this.props.tag;
+      })
+      .pop();
+    let value;
+    if (filter) {
+      value = filter.value;
+    }
     return (
       <td className="list-ctrl">
         <Row>
           <Col span={12}>
-            <div>{this.renderList()}</div>
+            <div>{this.renderList(value)}</div>
           </Col>
           <Col span={12}>
             <a href="javascript:void(0)" onClick={this.handlerMore}>
@@ -27,7 +36,7 @@ export class ListCtrl extends Component {
               className="more-box"
               style={{ display: this.state.showMore ? "block" : "none" }}
             >
-              {this.renderMore()}
+              {this.renderMore(value)}
             </div>
           </Col>
         </Row>
@@ -36,7 +45,7 @@ export class ListCtrl extends Component {
   }
 
   /// UI
-  renderList() {
+  renderList(value) {
     const {
       k: title,
       tag,
@@ -48,18 +57,10 @@ export class ListCtrl extends Component {
       return (
         <a
           key={index}
-          className={classNames({ cur: item === this.state.value })}
+          className={classNames({ cur: item === value })}
           href="javascript:void(0)"
           onClick={() => {
-            this.setState(
-              {
-                ...this.state,
-                value: item
-              },
-              () => {
-                updateFunc(title, item, tag, `${tag}:${item}`);
-              }
-            );
+            updateFunc(title, item, tag, `${tag}:${item}`);
           }}
         >
           {item}
@@ -68,7 +69,7 @@ export class ListCtrl extends Component {
     });
   }
 
-  renderMore() {
+  renderMore(value) {
     const {
       k: title,
       tag,
@@ -85,18 +86,10 @@ export class ListCtrl extends Component {
               return (
                 <a
                   key={index}
-                  className={classNames({ cur: this.state.value === elem })}
+                  className={classNames({ cur: value === elem })}
                   href="javascript:void(0);"
                   onClick={() => {
-                    this.setState(
-                      {
-                        ...this.state,
-                        value: elem
-                      },
-                      () => {
-                        updateFunc(title, elem, tag, `${tag}:${elem}`);
-                      }
-                    );
+                    updateFunc(title, elem, tag, `${tag}:${elem}`);
                   }}
                 >
                   {elem}
@@ -117,4 +110,6 @@ export class ListCtrl extends Component {
   };
 }
 
-export default ListCtrl;
+export default connect(({ picker: { filter } }) => ({
+  filter
+}))(ListCtrl);
