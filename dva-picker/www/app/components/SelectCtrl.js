@@ -37,7 +37,6 @@ class SelectCtrl extends Component {
     if (filter) {
       value = filter.value;
     }
-    console.log("value:", value);
 
     return (
       <td className="select-ctrl" ref="select_ctr_box">
