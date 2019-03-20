@@ -4,6 +4,7 @@
 
 ## Project
 dist/
+mock-data/result.json
 mock-data/db
 
 ### macOS ###
