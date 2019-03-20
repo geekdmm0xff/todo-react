@@ -14,6 +14,7 @@ app.get("/api", (req, res) => {
     engine,
     push,
     control,
+    buyDate,
     detail,
     saler,
     km,
@@ -40,6 +41,14 @@ app.get("/api", (req, res) => {
     id && (o.id = id);
     rate && (o.rate = buildRateQuery());
     brand && (o.brand = brand);
+    color && (o.color = color);
+    engine && (o.engine = engine);
+    push && (o.push = push);
+    control && (o.control = control);
+    buyDate && (o.buyDate = buyDate);
+    detail && (o.detail = detail);
+    saler && (o.saler = saler);
+    km && (o.km = km);
     price && (o.price = buildPriceQuery());
     return o;
   };
