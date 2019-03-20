@@ -1,48 +1,22 @@
-var express = require("express");
-var app = express();
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const CarSchema = require("./schemas/CarSchema");
+const url = require("url");
 const fs = require("fs");
 
-app.get("/cars", (req, res) => {
-  const flow = async function() {
-    let response = {};
-    let path = "./www/images/Corolla";
-    let colors = await readdir(path);
+app.get("/api", (req, res) => {
+  const { page, pagesize } = url.parse(req.url, true).query;
 
-    for (const color of colors) {
-      let subPath = path + "/" + color;
-      if (exists(subPath)) {
-        continue;
-      }
-      let albums = await readdir(subPath);
-      response[color] = {};
-      for (const album of albums) {
-        let detailPath = subPath + "/" + album;
-        if (exists(detailPath)) {
-          continue;
-        }
-        let images = await readdir(detailPath);
-        response[color][album] = images;
-      }
-    }
-    res.json({ result: response });
-  };
-
-  flow();
+  CarSchema.find()
+    .skip((page - 1) * pagesize)
+    .limit(parseInt(pagesize))
+    .exec((err, result) => {
+      if (!err) res.json({ result });
+      else console.log("err:", err);
+    });
 });
 
-//
-function readdir(path) {
-  return new Promise((resolve, reject) => {
-    fs.readdir(path, (err, data) => {
-      !err ? resolve(data) : reject(err);
-    });
-  });
-}
-
-function exists(path) {
-  return path.indexOf(".DS_Store") != -1;
-}
-
+mongoose.connect("mongodb://localhost/carsystem");
 app.use(express.static("www"));
-
 app.listen(3000);
