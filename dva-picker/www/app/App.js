@@ -127,7 +127,7 @@ class App extends Component {
                   <td className="td-h">品牌</td>
                   <TabCtrl
                     data={carbrand}
-                    k="carbrand"
+                    k="brand"
                     tag="品牌"
                     updateFunc={this.handerUpdate.bind(this)}
                   />
@@ -191,7 +191,7 @@ class App extends Component {
   // acitons
   handerUpdate = (key, value, tag, words) => {
     this.props.dispatch({
-      type: "picker/updateTag",
+      type: "picker/async_updateTag",
       payload: { key, value, tag, words }
     });
   };

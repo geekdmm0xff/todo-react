@@ -41,5 +41,39 @@ export default {
         : add(key, value, tag, words);
     }
   },
-  effects: {}
+  effects: {
+    *async_updateTag(action, { call, put, select }) {
+      const {
+        payload: { key, value }
+      } = action;
+      const params = {
+        page: 1,
+        pagesize: 20,
+        [key]: value // now
+      };
+      // before
+      const pickers = yield select(state => state.picker.filter);
+
+      // 1. build query url
+      let query = pickers.map(item => item.key + "=" + item.value).join("&");
+      query += Object.keys(params)
+        .map(key => key + "=" + params[key])
+        .join("&");
+      console.log("async_updateTag:", query);
+
+      // 2. fetch
+      const { page, total, list } = yield fetch("/api?" + query).then(data =>
+        data.json()
+      );
+      yield put({
+        type: "updateTag",
+        payload: {
+          ...action.payload,
+          page,
+          total,
+          list
+        }
+      });
+    }
+  }
 };
