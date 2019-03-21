@@ -3,9 +3,9 @@ const app = express();
 const mongoose = require("mongoose");
 const CarSchema = require("./schemas/CarSchema");
 const url = require("url");
-const fs = require("fs");
+const { promisify } = require("util");
 
-app.get("/api", (req, res) => {
+app.get("/api", async (req, res) => {
   const {
     id,
     rate,
@@ -67,44 +67,24 @@ app.get("/api", (req, res) => {
     return o;
   };
 
-  const fetchCount = query => {
-    return new Promise((resolve, reject) => {
-      CarSchema.count(query, (err, total) => {
-        !err ? resolve(total) : reject(err);
-      });
+  try {
+    const query = buildQuery();
+    console.log("query:", query);
+    let total = await CarSchema.count(query); //fetchCount(query);
+    let list = await CarSchema.find(query)
+      .skip((page - 1) * pagesize)
+      .limit(parseInt(pagesize))
+      .exec();
+    res.json({
+      page,
+      total,
+      list
     });
-  };
-
-  const fetchList = (query, page, pagesize) => {
-    return new Promise((resolve, reject) => {
-      CarSchema.find(query)
-        .skip((page - 1) * pagesize)
-        .limit(parseInt(pagesize))
-        .exec((err, list) => {
-          !err ? resolve(list) : reject(err);
-        });
+  } catch (err) {
+    res.sendStatus(400).json({
+      err
     });
-  };
-
-  const flow = async () => {
-    try {
-      const query = buildQuery();
-      console.log("query:", query);
-      let total = await fetchCount(query);
-      let list = await fetchList(query, page, pagesize);
-      res.json({
-        page,
-        total,
-        list
-      });
-    } catch (err) {
-      res.sendStatus(400).json({
-        err
-      });
-    }
-  };
-
-  flow();
+  }
 });
 
 mongoose.connect("mongodb://localhost/carsystem");
