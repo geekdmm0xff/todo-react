@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "dva";
 import { Tag } from "antd";
-import filter from "../App";
 
 class TagsCtrl extends Component {
   render() {
@@ -32,7 +31,7 @@ class TagsCtrl extends Component {
   };
   // actions
   handerClose = tag => {
-    this.props.dispatch({ type: "picker/deleteTag", payload: { tag } });
+    this.props.dispatch({ type: "picker/async_deleteTag", payload: { tag } });
   };
 }
 

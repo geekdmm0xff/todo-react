@@ -45,7 +45,7 @@ class RangeCtrl extends Component {
   }
 
   // UI
-  renderDefault(values) {
+  renderDefault(values = []) {
     const {
       k: title,
       tag,

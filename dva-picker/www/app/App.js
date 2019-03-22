@@ -116,6 +116,10 @@ class App extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.dispatch({ type: "picker/async_init" });
+  }
+
   render() {
     const { carbrand, system, price, cartype, seats } = this.state;
     return (
