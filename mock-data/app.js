@@ -94,24 +94,18 @@ var data = Mock.mock({
           Random.integer(0, 11),
           Random.integer(1, 31)
         );
-        return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay();
+        return date.getTime();
       },
       detail: () => Random.cparagraph(2),
-      "color|1": ["白色", "红色", "黑色", "灰色", "黄色", "绿色", "银色"],
+      "color|1": ["白", "红", "黑", "灰", "黄", "绿", "银"],
       saler: () => Random.cname(),
       km: () => Random.integer(0, 1000000),
       city: () => Random.county(true),
       "engine|1": [
-        "1.0",
-        "1.2",
         "1.2T",
-        "1.4",
         "1.4T",
-        "1.6",
         "1.6T",
-        "2.0",
         "2.0T",
-        "3.0",
         "4.0T",
         "5.0T"
       ],
