@@ -46,17 +46,23 @@ export default {
       const {
         payload: { key, value }
       } = action;
+      // before
+      const pickers = yield select(state => state.picker.filter);
+      const befores = pickers.reduce((acc, cur) => {
+        return Object.assign(acc, { [cur.key]: cur.value });
+      }, {});
+      // cureent
       const params = {
+        ...befores,
         page: 1,
         pagesize: 20,
         [key]: value // now
       };
-      // before
-      const pickers = yield select(state => state.picker.filter);
 
       // 1. build query url
-      let query = pickers.map(item => item.key + "=" + item.value).join("&");
-      query += Object.keys(params)
+      //let query = pickers.map(item => item.key + "=" + item.value).join("&");
+      pickers.forEach(element => {});
+      let query = Object.keys(params)
         .map(key => key + "=" + params[key])
         .join("&");
       console.log("async_updateTag:", query);

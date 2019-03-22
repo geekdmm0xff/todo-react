@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "dva";
 import classNames from "classnames";
+import { mapParamToState } from "../helpers/HelperUtils";
 
 class SelectCtrl extends Component {
   constructor(props) {
@@ -96,6 +97,7 @@ class SelectCtrl extends Component {
       let value = select.filter(title => title != item);
       updateFunc(k, value, tag, tag + ":" + item);
     };
+    const arr = mapParamToState(k, select);
 
     return (
       <dl
@@ -106,7 +108,7 @@ class SelectCtrl extends Component {
           <dd key={index}>
             <input
               type="checkbox"
-              checked={select.includes(item)}
+              checked={arr.includes(item)}
               onChange={event => {
                 if (event.target.checked) {
                   addTags(item);

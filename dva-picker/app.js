@@ -3,7 +3,6 @@ const app = express();
 const mongoose = require("mongoose");
 const CarSchema = require("./schemas/CarSchema");
 const url = require("url");
-const { promisify } = require("util");
 
 app.get("/api", async (req, res) => {
   const {
@@ -56,10 +55,10 @@ app.get("/api", async (req, res) => {
     control && (o.control = control);
 
     name && (o["system.name"] = name);
-    type && (o["system.type"] = type);
-    seat && (o["system.seat"] = parseInt(seat));
+    type && (o["system.type"] = buildMultQuery(type));
+    seat && (o["system.seat"] = buildMultQuery(seat));
 
-    buyDate && (o.buyDate = buyDate);
+    buyDate && (o.buyDate = buildRangeQuery(buyDate));
     detail && (o.detail = detail);
     saler && (o.saler = saler);
     km && (o.km = km);
@@ -70,10 +69,12 @@ app.get("/api", async (req, res) => {
   try {
     const query = buildQuery();
     console.log("query:", query);
+
     let total = await CarSchema.count(query); //fetchCount(query);
     let list = await CarSchema.find(query)
       .skip((page - 1) * pagesize)
       .limit(parseInt(pagesize))
+      .lean() // doc -> js's obj
       .exec();
     res.json({
       page,

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "dva";
 import "./styles/less.less";
+import { mapStateToParam } from "./helpers/HelperUtils";
 import TabCtrl from "./components/TabCtrl";
 import ListCtrl from "./components/ListCtrl";
 import RangeCtrl from "./components/RangeCtrl";
@@ -34,11 +35,11 @@ const carbrand = {
   d: ["大众", "东风风行", "东南", "东风风神", "东风风光", "道奇", "东风"]
 };
 const system = {
-  hot: ["大众", "奥迪", "宝马", "奔驰", "丰田"],
+  hot: ["宝马", "奔驰", "大众", "奥迪", "丰田"],
   all: {
-    两厢轿车: ["POLO", "朗逸"],
-    三厢轿车: ["A3", "A4"],
-    跑车: ["TT"]
+    两厢轿车: ["X1"],
+    三厢轿车: ["3系", "1系"],
+    豪华型轿车: ["A", "B"]
   }
 };
 const price = {
@@ -70,36 +71,36 @@ const price = {
 const cartype = {
   type: "multi",
   title: "车型",
-  options: [
-    "小型车",
-    "中型车",
-    "豪华车",
-    "小型SUV",
-    "中型SUV",
-    "大型SUV",
-    "越野",
-    "跑车",
-    "面包车"
-  ]
-  // value: [] //["豪华车", "大型SUV", "面包车"]
+  options: ["三厢轿车", "两厢轿车", "五厢轿车", "中型轿车", "豪华型轿车", "SUV"]
 };
 const seats = {
-  type: "single",
+  type: "multi",
   title: "座位数",
-  options: ["2座", "4座", "5座", "7座"]
-  // value: "" //"4座"
+  options: ["2座", "4座", "6座"]
 };
 
 const colors = {
   type: "single",
   title: "颜色",
-  options: ["红", "绿", "蓝", "黄"]
+  options: ["白", "红", "黑", "灰", "黄", "绿", "银"]
 };
 
 const engine = {
   type: "multi",
   title: "发动机",
-  options: ["I501", "I505", "I511", "I550", "I599", "I588"]
+  options: ["1.2T", "1.4T", "1.6T", "2.0T", "4.0T", "5.0T"]
+};
+
+const push = {
+  type: "single",
+  title: "排放",
+  options: ["国一", "国二", "国三", "国四", "国五"]
+};
+
+const control = {
+  type: "single",
+  title: "变速箱",
+  options: ["手动", "自动"]
 };
 
 class App extends Component {
@@ -154,13 +155,13 @@ class App extends Component {
                   <td className="td-h">其他</td>
                   <SelectCtrl
                     data={cartype}
-                    k="cartype"
+                    k="type"
                     tag="车型"
                     updateFunc={this.handerUpdate.bind(this)}
                   />
                   <SelectCtrl
                     data={seats}
-                    k="seats"
+                    k="seat"
                     tag="座位数"
                     updateFunc={this.handerUpdate.bind(this)}
                   />
@@ -174,6 +175,18 @@ class App extends Component {
                     data={engine}
                     k="engine"
                     tag="发动机"
+                    updateFunc={this.handerUpdate.bind(this)}
+                  />
+                  <SelectCtrl
+                    data={push}
+                    k="push"
+                    tag="排放"
+                    updateFunc={this.handerUpdate.bind(this)}
+                  />
+                  <SelectCtrl
+                    data={control}
+                    k="control"
+                    tag="变速箱"
                     updateFunc={this.handerUpdate.bind(this)}
                   />
                 </tr>
@@ -190,6 +203,8 @@ class App extends Component {
 
   // acitons
   handerUpdate = (key, value, tag, words) => {
+    value = mapStateToParam(key, value);
+
     this.props.dispatch({
       type: "picker/async_updateTag",
       payload: { key, value, tag, words }

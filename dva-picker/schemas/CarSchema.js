@@ -13,7 +13,7 @@ var schema = new mongoose.Schema({
     type: String,
     seat: Number
   },
-  buyDate: String,
+  buyDate: Number,
   detail: String,
   saler: String,
   km: Number,
