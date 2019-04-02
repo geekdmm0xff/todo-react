@@ -7,6 +7,7 @@ import ListCtrl from "./components/ListCtrl";
 import RangeCtrl from "./components/RangeCtrl";
 import SelectCtrl from "./components/SelectCtrl";
 import TagsCtrl from "./components/TagsCtrl";
+import TableCtrl from "./components/TableCtrl";
 
 const carbrand = {
   a: [
@@ -201,6 +202,8 @@ class App extends Component {
         <br />
         <br />
         <TagsCtrl />
+        <br />
+        <TableCtrl />
       </div>
     );
   }

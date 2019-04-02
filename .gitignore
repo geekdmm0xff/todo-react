@@ -6,6 +6,7 @@
 dist/
 mock-data/result.json
 mock-data/db
+package-lock.json
 
 ### macOS ###
 # General
