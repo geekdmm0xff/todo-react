@@ -21,8 +21,6 @@ class TableCtrl extends Component {
         key: "color"
       }
     ];
-
-    console.log(this.props.list);
     return <Table dataSource={this.props.list} columns={columns} />;
   }
 }

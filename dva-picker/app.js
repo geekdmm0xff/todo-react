@@ -23,7 +23,8 @@ app.get("/api", async (req, res) => {
     city,
     page,
     pagesize,
-    price
+    price,
+    sortby = "id"
   } = url.parse(req.url, true).query;
 
   const buildRangeQuery = range => {
@@ -72,6 +73,7 @@ app.get("/api", async (req, res) => {
 
     let total = await CarSchema.count(query); //fetchCount(query);
     let list = await CarSchema.find(query)
+      .sort({ [sortby]: 1 })
       .skip((page - 1) * pagesize)
       .limit(parseInt(pagesize))
       .lean() // doc -> js's obj
