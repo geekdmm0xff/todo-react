@@ -142,7 +142,7 @@ class App extends Component {
                   <td className="td-h">车系</td>
                   <ListCtrl
                     data={system}
-                    k="system"
+                    k="name"
                     tag="车系"
                     updateFunc={this.handerUpdate.bind(this)}
                   />
@@ -172,7 +172,7 @@ class App extends Component {
                   />
                   <SelectCtrl
                     data={colors}
-                    k="colors"
+                    k="color"
                     tag="颜色"
                     updateFunc={this.handerUpdate.bind(this)}
                   />

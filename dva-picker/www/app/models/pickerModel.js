@@ -1,7 +1,8 @@
 export default {
   namespace: "picker",
   state: {
-    filter: []
+    filter: [],
+    total: 0
   },
   reducers: {
     deleteTag(state, action) {
