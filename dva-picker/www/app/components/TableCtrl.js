@@ -67,11 +67,21 @@ class TableCtrl extends Component {
         key: "saler"
       }
     ];
+    const pageConfig = {
+      current: 1,
+      pageSize: 20,
+      total: 100
+    };
     return (
       <div>
         <h3>共找到{this.props.total}条数据</h3>
         <br />
-        <Table rowKey="id" dataSource={this.props.list} columns={columns} />
+        <Table
+          rowKey="id"
+          dataSource={this.props.list}
+          columns={columns}
+          pagination={pageConfig}
+        />
       </div>
     );
   }
@@ -86,7 +96,9 @@ const mapStateToProps = ({ picker: { list = [], total } }) => ({
       return item;
     });
   })(),
-  total
+  page,
+  total,
+  pagesize: pageSize
 });
 
 export default connect(mapStateToProps)(TableCtrl);
