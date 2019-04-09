@@ -2,7 +2,9 @@ export default {
   namespace: "picker",
   state: {
     filter: [],
-    total: 0
+    total: 0,
+    page: 1,
+    pagesize: 20
   },
   reducers: {
     deleteTag(state, action) {
@@ -64,15 +66,19 @@ export default {
         payload: { key, value }
       } = action;
       // before
-      const pickers = yield select(state => state.picker.filter);
+      const { filter: pickers, page: index, pagesize: limit } = yield select(
+        state => state.picker
+      );
+
       const befores = pickers.reduce((acc, cur) => {
         return Object.assign(acc, { [cur.key]: cur.value });
       }, {});
+
       // cureent
       const params = {
         ...befores,
-        page: 1,
-        pagesize: 20,
+        index,
+        limit,
         [key]: value // now
       };
 
@@ -99,9 +105,12 @@ export default {
       });
     },
 
-    *async_init(action, { put }) {
+    *async_init(action, { put, select }) {
+      const { page: index, pagesize: limit } = yield select(
+        state => state.picker
+      );
       const { page, total, list } = yield fetch(
-        "./api?page=1&pagesize=20"
+        `./api?page=${index}&pagesize=${limit}`
       ).then(data => data.json());
       yield put({
         type: "updateTag",
@@ -122,7 +131,9 @@ export default {
         payload: { tag }
       } = action;
       // before
-      let pickers = yield select(state => state.picker.filter);
+      let { filter: pickers, page: index, pagesize: limit } = yield select(
+        state => state.picker
+      );
       pickers = pickers.filter(item => item.tag != tag);
       const befores = pickers.reduce((acc, cur) => {
         return Object.assign(acc, { [cur.key]: cur.value });
