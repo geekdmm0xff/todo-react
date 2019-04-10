@@ -37,7 +37,7 @@ class TableCtrl extends Component {
         key: "buyDate"
       },
       {
-        title: "已经行驶(千米)",
+        title: "已经行驶",
         dataIndex: "km",
         key: "km"
       },
@@ -90,9 +90,12 @@ class TableCtrl extends Component {
 const mapStateToProps = ({ picker: { list = [], total, page, pagesize } }) => ({
   list: (function() {
     return list.map(item => {
-      const date = new Date(item.buyDate);
-      item.buyDate = `${date.getFullYear()}-${date.getMonth() +
-        1}-${date.getDay() + 1}`;
+      item.buyDate = item.buyDate.replace(
+        /(\d{4})-(\d{1,2})-(\d{1,2})/g,
+        (total, year, month, day) => {
+          return `${year}-${parseInt(month) + 1}-${parseInt(day) + 1}`;
+        }
+      );
       return item;
     });
   })(),

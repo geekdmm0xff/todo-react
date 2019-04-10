@@ -70,7 +70,6 @@ app.get("/api", async (req, res) => {
 
   try {
     const query = buildQuery();
-    console.log("query:", query, page);
 
     let total = await CarSchema.count(query); //fetchCount(query);
     let list = await CarSchema.find(query)
