@@ -70,7 +70,7 @@ app.get("/api", async (req, res) => {
 
   try {
     const query = buildQuery();
-    console.log("query:", query);
+    console.log("query:", query, page);
 
     let total = await CarSchema.count(query); //fetchCount(query);
     let list = await CarSchema.find(query)
@@ -80,7 +80,7 @@ app.get("/api", async (req, res) => {
       .lean() // doc -> js's obj
       .exec();
     res.json({
-      page,
+      page: parseInt(page),
       total,
       list
     });

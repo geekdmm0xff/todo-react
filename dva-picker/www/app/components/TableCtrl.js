@@ -68,9 +68,9 @@ class TableCtrl extends Component {
       }
     ];
     const pageConfig = {
-      current: 1,
-      pageSize: 20,
-      total: 100
+      current: this.props.page,
+      pageSize: this.props.pagesize,
+      total: this.props.total
     };
     return (
       <div>
@@ -87,7 +87,7 @@ class TableCtrl extends Component {
   }
 }
 
-const mapStateToProps = ({ picker: { list = [], total } }) => ({
+const mapStateToProps = ({ picker: { list = [], total, page, pagesize } }) => ({
   list: (function() {
     return list.map(item => {
       const date = new Date(item.buyDate);
@@ -98,7 +98,7 @@ const mapStateToProps = ({ picker: { list = [], total } }) => ({
   })(),
   page,
   total,
-  pagesize: pageSize
+  pagesize
 });
 
 export default connect(mapStateToProps)(TableCtrl);

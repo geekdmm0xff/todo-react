@@ -112,6 +112,7 @@ export default {
       const { page, total, list } = yield fetch(
         `./api?page=${index}&pagesize=${limit}`
       ).then(data => data.json());
+      console.log("page:", page, typeof page);
       yield put({
         type: "updateTag",
         payload: {
@@ -121,9 +122,6 @@ export default {
           list
         }
       });
-    },
-    *async_send() {
-      console.log("aaaa");
     },
 
     *async_deleteTag(action, { put, select }) {
